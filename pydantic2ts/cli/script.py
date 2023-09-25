@@ -212,7 +212,7 @@ def generate_json_schema_v2(models: List[Type[BaseModel]]) -> str:
         master_model.model_config["extra"] = "forbid"
         master_model.model_config["json_schema_extra"] = staticmethod(clean_schema)
 
-        schema: dict = master_model.model_json_schema(mode="serialization")
+        schema = json.loads(master_model.schema_json())
 
         for d in schema.get("$defs", {}).values():
             clean_schema(d)
